@@ -10,6 +10,7 @@ import org.slf4j.LoggerFactory;
 public class LoginPage {
 
     private WebDriver driver;
+
     private static final Logger log = LoggerFactory.getLogger(LoginPage.class);
 
     private By usernameField = By.id("user-name");
@@ -38,7 +39,6 @@ public class LoginPage {
         log.info("Clicking on Login button");
         Utility.click(driver, loginButton);
     }
-
 
     @Step("Perform login with username: {username}")
     public void login(String username, String password) {
