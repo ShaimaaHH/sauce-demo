@@ -13,15 +13,13 @@ import java.util.Map;
 import static Utilities.DataUtils.getPropertyValue;
 
 public class DriverFactory {
+
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     public static void driverSetup() {
-
         String browser = getPropertyValue("config", "Browser");
         if (browser == null) browser = "chrome";
-
         switch (browser.toLowerCase()) {
-
             case "edge": {
                 EdgeOptions options = new EdgeOptions();
                 options.addArguments("--start-maximized");
@@ -45,12 +43,10 @@ public class DriverFactory {
                 driverThreadLocal.set(new ChromeDriver(options));
                 break;
         }
-
     }
 
     public static WebDriver getDriver() {
         return driverThreadLocal.get();
-
     }
 
     public static void quitDriver() {
