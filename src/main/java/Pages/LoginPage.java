@@ -21,22 +21,22 @@ public class LoginPage {
         this.driver = driver;
     }
 
-    @Step("Enter username: {username}")
+    @Step("Enter username: {0}")
     public void enterUsername(String username) {
         log.info("Entering username: {}", username);
-        Utility.sendData(driver, usernameField, username);
+        Utility.sendKeys(driver, usernameField, username);
     }
 
     @Step("Enter password")
     public void enterPassword(String password) {
         log.info("Entering password");
-        Utility.sendData(driver, passwordField, password);
+        Utility.sendKeys(driver, passwordField, password);
     }
 
     @Step("Click on Login button")
     public void clickLogin() {
         log.info("Clicking on Login button");
-        Utility.clickOnElement(driver, loginButton);
+        Utility.click(driver, loginButton);
     }
 
 
@@ -51,12 +51,12 @@ public class LoginPage {
     @Step("Get error message text")
     public String getErrorMessage() {
         log.info("Getting error message text");
-        return Utility.getTextData(driver, errorMessage);
+        return Utility.getText(driver, errorMessage);
     }
 
     @Step("Check if error message is displayed")
     public boolean isErrorMessageDisplayed() {
         log.info("Checking if error message is displayed");
-        return Utility.isErrorMessageDisplayed(driver, errorMessage);
+        return Utility.isDisplayed(driver, errorMessage);
     }
 }

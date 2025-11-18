@@ -10,58 +10,62 @@ import java.time.Duration;
 
 public class Utility {
 
-    private static final int waitTime = Integer.parseInt(DataUtils.getPropertyValue("config", "waitTime"));
+    private static final int waitTime =
+            Integer.parseInt(DataUtils.getPropertyValue("config", "waitTime"));
 
-    public static WebDriverWait general(WebDriver driver) {
+    private static WebDriverWait wait(WebDriver driver) {
         return new WebDriverWait(driver, Duration.ofSeconds(waitTime));
     }
 
-    public static void clickOnElement(WebDriver driver, By locator) {
-        general(driver).until(ExpectedConditions.elementToBeClickable(locator));
-        driver.findElement(locator).click();
+    // wait methods
+    public static WebElement waitForVisibility(WebDriver driver, By locator) {
+        return wait(driver).until(ExpectedConditions.visibilityOfElementLocated(locator));
     }
 
-    public static void sendData(WebDriver driver, By locator, String data) {
-        general(driver).until(ExpectedConditions.visibilityOfElementLocated(locator));
-        driver.findElement(locator).sendKeys(data);
+    public static WebElement waitForClickability(WebDriver driver, By locator) {
+        return wait(driver).until(ExpectedConditions.elementToBeClickable(locator));
     }
 
-    public static boolean verifyUrlRedirection(WebDriver driver, String expectedURL) {
+    public static WebElement waitForPresence(WebDriver driver, By locator) {
+        return wait(driver).until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    // action methods
+    public static void click(WebDriver driver, By locator) {
+        WebElement element = waitForClickability(driver, locator);
+        element.click();
+    }
+
+    public static void sendKeys(WebDriver driver, By locator, String data) {
+        WebElement element = waitForVisibility(driver, locator);
+        element.clear();
+        element.sendKeys(data);
+    }
+
+    public static String getText(WebDriver driver, By locator) {
+        return waitForVisibility(driver, locator).getText();
+    }
+
+    // validation methods
+    public static boolean verifyUrl(WebDriver driver, String expectedURL) {
         try {
-            Utility.general(driver).until(ExpectedConditions.urlToBe(expectedURL));
-        } catch (Exception e) {
-            return false;
-        }
-        return true;
-    }
-
-    public static boolean isErrorMessageDisplayed(WebDriver driver, By locator) {
-        try {
-            general(driver)
-                    .until(ExpectedConditions.visibilityOfElementLocated(locator));
-            return driver.findElement(locator).isDisplayed();
-        } catch (Exception e) {
-            return false;
-        }
-    }
-
-    public static String getTextData(WebDriver driver, By locator) {
-        general(driver).until(ExpectedConditions.visibilityOfElementLocated(locator));
-        return driver.findElement(locator).getText();
-    }
-
-    public static boolean isElementDisplayed(WebDriver driver, By locator) {
-        try {
-            general(driver).until(ExpectedConditions.visibilityOfElementLocated(locator));
-            WebElement element = driver.findElement(locator);
-            return element.isDisplayed();
+            wait(driver).until(ExpectedConditions.urlToBe(expectedURL));
+            return true;
         } catch (Exception e) {
             return false;
         }
     }
 
-    public static WebElement toWebElement(WebDriver driver, By locator) {
-        return driver.findElement(locator);
+    public static boolean isDisplayed(WebDriver driver, By locator) {
+        try {
+            return waitForVisibility(driver, locator).isDisplayed();
+        } catch (Exception e) {
+            return false;
+        }
     }
 
+    // web element method
+    public static WebElement getElement(WebDriver driver, By locator) {
+        return waitForPresence(driver, locator);
+    }
 }

@@ -38,44 +38,42 @@ public class LoginTest {
     @Step("login with user type: {userType}")
     private void loginWithUserType(String userType) {
         JsonObject user = DataUtils.getUserByType("users", userType);
-        String username = user.get("username").getAsString();
-        String password = user.get("password").getAsString();
-        loginPage.login(username, password);
+        loginPage.login(user.get("username").getAsString(), user.get("password").getAsString());
     }
 
     @Test(description = "Login with Standard User")
     public void loginWithStandardUser() {
         loginWithUserType("standard");
         String expectedUrl = DataUtils.getPropertyValue("config", "Inventory_URL");
-        Assert.assertTrue(Utility.verifyUrlRedirection(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
+        Assert.assertTrue(Utility.verifyUrl(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
     }
 
     @Test(description = "Login with Problem User")
     public void loginWithProblemUser() {
         loginWithUserType("problem");
         String expectedUrl = DataUtils.getPropertyValue("config", "Inventory_URL");
-        Assert.assertTrue(Utility.verifyUrlRedirection(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
+        Assert.assertTrue(Utility.verifyUrl(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
     }
 
     @Test(description = "Login with Performance Glitch User")
     public void loginWithPerformanceGlitchUser() {
         loginWithUserType("performance glitch");
         String expectedUrl = DataUtils.getPropertyValue("config", "Inventory_URL");
-        Assert.assertTrue(Utility.verifyUrlRedirection(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
+        Assert.assertTrue(Utility.verifyUrl(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
     }
 
     @Test(description = "Login with Visual User")
     public void loginWithVisualUser() {
         loginWithUserType("visual");
         String expectedUrl = DataUtils.getPropertyValue("config", "Inventory_URL");
-        Assert.assertTrue(Utility.verifyUrlRedirection(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
+        Assert.assertTrue(Utility.verifyUrl(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
     }
 
     @Test(description = "Login with Error User")
     public void loginWithErrorUser() {
         loginWithUserType("error");
         String expectedUrl = DataUtils.getPropertyValue("config", "Inventory_URL");
-        Assert.assertTrue(Utility.verifyUrlRedirection(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
+        Assert.assertTrue(Utility.verifyUrl(driver, expectedUrl), "User was not redirected to Inventory page after valid login");
     }
 
     @Test(description = "Login with Locked Out User")
