@@ -64,7 +64,7 @@ public class Utility {
         }
     }
 
-    // web element method
+    // webElement method
     public static WebElement getElement(WebDriver driver, By locator) {
         return waitForPresence(driver, locator);
     }
