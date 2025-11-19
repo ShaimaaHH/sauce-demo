@@ -4,15 +4,13 @@ import DriverFactory.DriverFactory;
 import Models.User;
 import Pages.LoginPage;
 import Utilities.DataUtils;
+import Utilities.LogUtils;
 import Utilities.Utility;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
 import io.qameta.allure.Story;
-import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
-import org.apache.logging.log4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
@@ -27,19 +25,19 @@ public class LoginTest {
     private String baseUrl;
     private String inventoryUrl;
 
-    public static Logger log = LogManager.getLogger(LoginTest.class);
+    //public static Logger log = LogManager.getLogger(LoginTest.class);
 
     @BeforeMethod(alwaysRun = true)
     @Step("Setup WebDriver and navigate to Login Page")
     public void setup() {
-        log.info("Initializing WebDriver and navigating to Login Page");
+        LogUtils.info("Initializing WebDriver and navigating to Login Page");
         DriverFactory.driverSetup();
         driver = DriverFactory.getDriver();
         baseUrl = DataUtils.getPropertyValue("config", "Base_URL")
                 .orElseThrow(() -> new RuntimeException("Base URL not found in config.properties"));
         inventoryUrl = DataUtils.getPropertyValue("config", "Inventory_URL")
                 .orElseThrow(() -> new RuntimeException("Inventory_URL not found"));
-        log.info("Navigating to base URL: {}", baseUrl);
+        LogUtils.info("Navigating to base URL: ", baseUrl);
         driver.get(baseUrl);
         loginPage = new LoginPage(driver);
     }
@@ -47,7 +45,7 @@ public class LoginTest {
     @AfterMethod(alwaysRun = true)
     @Step("quit WebDriver")
     public void tearDown() {
-        log.info("Quitting WebDriver");
+        LogUtils.info("Quitting WebDriver");
         DriverFactory.quitDriver();
     }
 
@@ -57,7 +55,7 @@ public class LoginTest {
     private void loginWithUserType(String type) {
         User user = DataUtils.getUserByType(type);
 
-        log.info("logging in as user type: {}", type);
+        LogUtils.info("logging in as user type: ", type);
         loginPage.login(
                 user.getUsername(),
                 user.getPassword());
@@ -65,7 +63,7 @@ public class LoginTest {
 
     @Step("Verify redirect to inventory page")
     private void verifyInventoryPageRedirect() {
-        log.info("Verifying redirect to inventory page : {}", inventoryUrl);
+        LogUtils.info("Verifying redirect to inventory page : ", inventoryUrl);
         Assert.assertTrue(Utility.verifyUrl(driver, inventoryUrl),
                 "Models.User was not redirected to Inventory page after valid login");
     }
@@ -80,7 +78,7 @@ public class LoginTest {
         Assert.assertTrue(loginPage.isErrorMessageDisplayed(), "Error message is not displayed");
         if (!expectedMessage.isEmpty()) {
             String actual = loginPage.getErrorMessage();
-            log.info("Actual error message: {}", actual);
+            LogUtils.error("Actual error message: ", actual);
             Assert.assertEquals(actual, expectedMessage, "Error message mismatch");
         }
     }
@@ -182,7 +180,7 @@ public class LoginTest {
     @Feature("Login page UI element")
     @Test(groups = {"UI"})
     public void verifyPasswordMasking() {
-        log.info("Validate password masking");
+        LogUtils.info("Validate password masking");
         Assert.assertTrue(loginPage.isPasswordMasked(), "Password field is NOT masked!");
     }
 
@@ -196,7 +194,7 @@ public class LoginTest {
     @Feature("Login page UI element")
     @Test(groups = {"UI"})
     public void verifyUsernamePlaceholder() {
-        log.info("Validating username placeholder text");
+        LogUtils.info("Validating username placeholder text");
         String actualPlaceholder = loginPage.getUsernamePlaceholder();
         Assert.assertEquals(actualPlaceholder, "Username", "Username placeholder text is incorrect!");
     }
@@ -204,7 +202,7 @@ public class LoginTest {
     @Feature("Login page UI element")
     @Test(groups = {"UI"})
     public void verifyPasswordPlaceholder() {
-        log.info("Validating password placeholder text");
+        LogUtils.info("Validating password placeholder text");
         String actualPlaceholder = loginPage.getPasswordPlaceholder();
         Assert.assertEquals(actualPlaceholder, "Password", "Password placeholder text is incorrect!");
     }
