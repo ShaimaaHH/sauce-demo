@@ -57,6 +57,7 @@ public class LoginPage {
 
     @Step("Logout from the application")
     public void logout() {
+        log.info("Logging out from the application");
         Utility.click(driver, menuButton);
         Utility.click(driver, logoutLink);
     }
@@ -64,42 +65,41 @@ public class LoginPage {
     // validations
     @Step("Get error message text")
     public String getErrorMessage() {
-        log.info("Getting error message text");
         return Utility.getText(driver, errorMessage);
     }
 
     @Step("Check if error message is displayed")
     public boolean isErrorMessageDisplayed() {
-        log.info("Checking if error message is displayed");
         return Utility.isDisplayed(driver, errorMessage);
     }
 
     @Step("Verify password field masking")
     public boolean isPasswordMasked() {
-        log.info("Checking if password field is masked (type='password')");
         String type = Utility.getAttribute(driver, passwordField, "type");
         boolean isMasked = type.equals("password");
-        log.info("password field type attribute: {}", type);
-        log.info("Password field masking status: {}", isMasked);
+        log.info("Password field type attribute: {}, is masked: {}", type, isMasked);
         return isMasked;
     }
 
     // validate login page UI elements
     @Step("Verify login page logo visibility")
     public boolean isLoginLogoVisible() {
-        log.info("Checking visibility of login page logo");
-        return Utility.isDisplayed(driver, loginLogo);
+        boolean isVisible = Utility.isDisplayed(driver, loginLogo);
+        log.info("Login page logo visibility: {}", isVisible);
+        return isVisible;
     }
 
     @Step("Get username placeholder text")
     public String getUsernamePlaceholder() {
-        log.info("Getting username placeholder");
-        return Utility.getAttribute(driver, usernameField, "placeholder");
+        String placeholder = Utility.getAttribute(driver, usernameField, "placeholder");
+        log.info("username placeholder text: {}", placeholder);
+        return placeholder;
     }
 
     @Step("Get password placeholder text")
     public String getPasswordPlaceholder() {
-        log.info("Getting password placeholder");
-        return Utility.getAttribute(driver, passwordField, "placeholder");
+        String placeholder = Utility.getAttribute(driver, passwordField, "placeholder");
+        log.info("password placeholder text: {}", placeholder);
+        return placeholder;
     }
 }

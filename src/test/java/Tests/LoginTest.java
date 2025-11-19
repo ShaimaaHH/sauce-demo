@@ -8,8 +8,10 @@ import Utilities.Utility;
 import io.qameta.allure.Epic;
 import io.qameta.allure.Feature;
 import io.qameta.allure.Step;
+import io.qameta.allure.Story;
+import org.apache.logging.log4j.LogManager;
 import org.openqa.selenium.WebDriver;
-import org.slf4j.Logger;
+import org.apache.logging.log4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
@@ -17,15 +19,15 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 
-@Epic("sauceDemo automation Tests")
-@Feature("Login Functionality Tests")
+@Epic("user management")
 public class LoginTest {
 
     private WebDriver driver;
     private LoginPage loginPage;
     private String baseUrl;
     private String inventoryUrl;
-    private static final Logger log = LoggerFactory.getLogger(LoginTest.class);
+
+    public static Logger log = LogManager.getLogger(LoginTest.class);
 
     @BeforeMethod(alwaysRun = true)
     @Step("Setup WebDriver and navigate to Login Page")
@@ -43,14 +45,15 @@ public class LoginTest {
     }
 
     @AfterMethod(alwaysRun = true)
-    @Step("Quit WebDriver")
+    @Step("quit WebDriver")
     public void tearDown() {
         log.info("Quitting WebDriver");
         DriverFactory.quitDriver();
     }
 
     //helper methods
-    @Step("login with user type: {type}")
+
+    @Step("Login as user type: {type}")
     private void loginWithUserType(String type) {
         User user = DataUtils.getUserByType(type);
 
@@ -60,19 +63,19 @@ public class LoginTest {
                 user.getPassword());
     }
 
-    @Step("Verify user is redirected to Inventory page")
+    @Step("Verify redirect to inventory page")
     private void verifyInventoryPageRedirect() {
         log.info("Verifying redirect to inventory page : {}", inventoryUrl);
         Assert.assertTrue(Utility.verifyUrl(driver, inventoryUrl),
                 "Models.User was not redirected to Inventory page after valid login");
     }
 
-    @Step("Verify user is redirected to Login page after logout")
+    @Step("Verify redirect to login page")
     private void verifyLoginPageRedirect() {
         Assert.assertTrue(Utility.verifyUrl(driver, baseUrl), "User was not redirected to Login page after logout");
     }
 
-    @Step("verify error message is displayed")
+    @Step("Validate error message: {expectedMessage}")
     private void validateErrorMessage(@org.jetbrains.annotations.NotNull String expectedMessage) {
         Assert.assertTrue(loginPage.isErrorMessageDisplayed(), "Error message is not displayed");
         if (!expectedMessage.isEmpty()) {
@@ -83,94 +86,123 @@ public class LoginTest {
     }
 
     //positive login tests
-    @Test(description = "Login with standard user")
+
+    @Feature("Login functionality")
+    @Story("valid login scenario")
+    @Test()
     public void loginWithStandardUser() {
         loginWithUserType("standard");
         verifyInventoryPageRedirect();
     }
 
-    @Test(description = "Login with problem user")
+    @Feature("Login functionality")
+    @Story("valid login scenario")
+    @Test()
     public void loginWithProblemUser() {
         loginWithUserType("problem");
         verifyInventoryPageRedirect();
     }
 
-    @Test(description = "Login with performance glitch user")
+    @Feature("Login functionality")
+    @Story("valid login scenario")
+    @Test()
     public void loginWithPerformanceGlitchUser() {
         loginWithUserType("performance glitch");
         verifyInventoryPageRedirect();
     }
 
-    @Test(description = "Login with visual user")
+    @Feature("Login functionality")
+    @Story("valid login scenario")
+    @Test()
     public void loginWithVisualUser() {
         loginWithUserType("visual");
         verifyInventoryPageRedirect();
     }
 
-    @Test(description = "Login with error user")
+    @Feature("Login functionality")
+    @Story("valid login scenario")
+    @Test()
     public void loginWithErrorUser() {
         loginWithUserType("error");
         verifyInventoryPageRedirect();
     }
 
     //negative login tests
-    @Test(description = "Login with locked out user")
+
+    @Feature("Login functionality")
+    @Story("invalid login scenario")
+    @Test()
     public void loginWithLockedOutUser() {
         loginWithUserType("locked out");
         validateErrorMessage("Epic sadface: Sorry, this user has been locked out.");
     }
 
-    @Test(description = "Login with invalid username")
+    @Feature("Login functionality")
+    @Story("invalid login scenario")
+    @Test()
     public void loginWithInvalidUsername() {
         loginWithUserType("invalid username");
         validateErrorMessage("Epic sadface: Username and password do not match any user in this service");
     }
 
-    @Test(description = "Login with invalid password")
+    @Feature("Login functionality")
+    @Story("invalid login scenario")
+    @Test()
     public void loginWithInvalidPassword() {
         loginWithUserType("invalid password");
         validateErrorMessage("Epic sadface: Username and password do not match any user in this service");
     }
 
-    @Test(description = "Login with empty username")
+    @Feature("Login functionality")
+    @Story("invalid login scenario")
+    @Test()
     public void loginWithEmptyUsername() {
         loginWithUserType("empty username");
         validateErrorMessage("Epic sadface: Username is required");
     }
 
-    @Test(description = "Login with empty password")
+    @Feature("Login functionality")
+    @Story("invalid login scenario")
+    @Test()
     public void loginWithEmptyPassword() {
         loginWithUserType("empty password");
         validateErrorMessage("Epic sadface: Password is required");
     }
 
-    @Test(description = "Login with empty username and password")
+    @Feature("Login functionality")
+    @Story("invalid login scenario")
+    @Test()
     public void loginWithEmptyFields() {
         loginWithUserType("empty username and password");
         validateErrorMessage("Epic sadface: Username is required");
     }
 
     //UI tests
-    @Test(description = "Password masking validation", groups = {"UI"})
+
+    @Feature("Login page UI element")
+    @Test(groups = {"UI"})
     public void verifyPasswordMasking() {
         log.info("Validate password masking");
         Assert.assertTrue(loginPage.isPasswordMasked(), "Password field is NOT masked!");
     }
 
-    @Test(description = "Verify login page logo is visible", groups = {"UI"})
+    @Feature("Login page UI element")
+    @Test(groups = {"UI"})
     public void verifyLoginPageLogoVisibility() {
         Assert.assertTrue(
                 loginPage.isLoginLogoVisible(), "Login page logo is not visible");
     }
 
-    @Test(description = "username placeholder validation", groups = {"UI"})
+    @Feature("Login page UI element")
+    @Test(groups = {"UI"})
     public void verifyUsernamePlaceholder() {
         log.info("Validating username placeholder text");
         String actualPlaceholder = loginPage.getUsernamePlaceholder();
         Assert.assertEquals(actualPlaceholder, "Username", "Username placeholder text is incorrect!");
     }
 
-    @Test(description = "Password placeholder validation", groups = {"UI"})
+    @Feature("Login page UI element")
+    @Test(groups = {"UI"})
     public void verifyPasswordPlaceholder() {
         log.info("Validating password placeholder text");
         String actualPlaceholder = loginPage.getPasswordPlaceholder();
@@ -178,7 +210,9 @@ public class LoginTest {
     }
 
     // logout test
-    @Test(description = "Logout and redirect to login page")
+
+    @Feature("Logout functionality")
+    @Test()
     public void logoutTest() {
         loginWithUserType("standard");
         verifyInventoryPageRedirect();

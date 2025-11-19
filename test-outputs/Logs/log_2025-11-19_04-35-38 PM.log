@@ -1,0 +1,75 @@
+[INFO] 19-11-2025 16:35:38 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:35:40 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:35:41 [main] [Tests.LoginTest] - logging in as user type: empty username and password
+[INFO] 19-11-2025 16:35:42 [main] [Tests.LoginTest] - Actual error message: Epic sadface: Username is required
+[INFO] 19-11-2025 16:35:42 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:35:42 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:35:43 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:35:44 [main] [Tests.LoginTest] - logging in as user type: empty password
+[INFO] 19-11-2025 16:35:45 [main] [Tests.LoginTest] - Actual error message: Epic sadface: Password is required
+[INFO] 19-11-2025 16:35:45 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:35:46 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:35:47 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:35:48 [main] [Tests.LoginTest] - logging in as user type: empty username
+[INFO] 19-11-2025 16:35:49 [main] [Tests.LoginTest] - Actual error message: Epic sadface: Username is required
+[INFO] 19-11-2025 16:35:50 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:35:50 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:35:51 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:35:54 [main] [Tests.LoginTest] - logging in as user type: error
+[INFO] 19-11-2025 16:35:56 [main] [Tests.LoginTest] - Verifying redirect to inventory page : https://www.saucedemo.com/inventory.html
+[INFO] 19-11-2025 16:35:56 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:35:56 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:35:57 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:35:58 [main] [Tests.LoginTest] - logging in as user type: invalid password
+[INFO] 19-11-2025 16:35:59 [main] [Tests.LoginTest] - Actual error message: Epic sadface: Username and password do not match any user in this service
+[INFO] 19-11-2025 16:35:59 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:00 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:01 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:02 [main] [Tests.LoginTest] - logging in as user type: invalid username
+[INFO] 19-11-2025 16:36:03 [main] [Tests.LoginTest] - Actual error message: Epic sadface: Username and password do not match any user in this service
+[INFO] 19-11-2025 16:36:03 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:04 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:05 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:09 [main] [Tests.LoginTest] - logging in as user type: locked out
+[INFO] 19-11-2025 16:36:11 [main] [Tests.LoginTest] - Actual error message: Epic sadface: Sorry, this user has been locked out.
+[INFO] 19-11-2025 16:36:11 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:11 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:12 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:14 [main] [Tests.LoginTest] - logging in as user type: performance glitch
+[INFO] 19-11-2025 16:36:20 [main] [Tests.LoginTest] - Verifying redirect to inventory page : https://www.saucedemo.com/inventory.html
+[INFO] 19-11-2025 16:36:20 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:20 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:21 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:22 [main] [Tests.LoginTest] - logging in as user type: problem
+[INFO] 19-11-2025 16:36:23 [main] [Tests.LoginTest] - Verifying redirect to inventory page : https://www.saucedemo.com/inventory.html
+[INFO] 19-11-2025 16:36:23 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:24 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:25 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:26 [main] [Tests.LoginTest] - logging in as user type: standard
+[INFO] 19-11-2025 16:36:28 [main] [Tests.LoginTest] - Verifying redirect to inventory page : https://www.saucedemo.com/inventory.html
+[INFO] 19-11-2025 16:36:28 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:28 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:29 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:30 [main] [Tests.LoginTest] - logging in as user type: visual
+[INFO] 19-11-2025 16:36:31 [main] [Tests.LoginTest] - Verifying redirect to inventory page : https://www.saucedemo.com/inventory.html
+[INFO] 19-11-2025 16:36:31 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:32 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:33 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:34 [main] [Tests.LoginTest] - logging in as user type: standard
+[INFO] 19-11-2025 16:36:35 [main] [Tests.LoginTest] - Verifying redirect to inventory page : https://www.saucedemo.com/inventory.html
+[INFO] 19-11-2025 16:36:35 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:36 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:37 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:38 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:39 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:40 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:41 [main] [Tests.LoginTest] - Validate password masking
+[INFO] 19-11-2025 16:36:41 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:42 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:43 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:44 [main] [Tests.LoginTest] - Validating password placeholder text
+[INFO] 19-11-2025 16:36:44 [main] [Tests.LoginTest] - Quitting WebDriver
+[INFO] 19-11-2025 16:36:45 [main] [Tests.LoginTest] - Initializing WebDriver and navigating to Login Page
+[INFO] 19-11-2025 16:36:46 [main] [Tests.LoginTest] - Navigating to base URL: https://www.saucedemo.com/
+[INFO] 19-11-2025 16:36:47 [main] [Tests.LoginTest] - Validating username placeholder text
+[INFO] 19-11-2025 16:36:47 [main] [Tests.LoginTest] - Quitting WebDriver
