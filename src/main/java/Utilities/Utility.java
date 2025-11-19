@@ -11,7 +11,7 @@ import java.time.Duration;
 public class Utility {
 
     private static final int waitTime =
-            Integer.parseInt(DataUtils.getPropertyValue("config", "waitTime"));
+            Integer.parseInt(DataUtils.getPropertyValue("config", "waitTime").orElse("10"));
 
     private static WebDriverWait wait(WebDriver driver) {
         return new WebDriverWait(driver, Duration.ofSeconds(waitTime));
@@ -67,5 +67,10 @@ public class Utility {
     // webElement method
     public static WebElement getElement(WebDriver driver, By locator) {
         return waitForPresence(driver, locator);
+    }
+
+    public static String getAttribute(WebDriver driver, By locator, String attribute) {
+        WebElement element = waitForPresence(driver, locator);
+        return element.getAttribute(attribute);
     }
 }

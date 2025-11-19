@@ -17,8 +17,7 @@ public class DriverFactory {
     private static final ThreadLocal<WebDriver> driverThreadLocal = new ThreadLocal<>();
 
     public static void driverSetup() {
-        String browser = getPropertyValue("config", "Browser");
-        if (browser == null) browser = "chrome";
+        String browser = getPropertyValue("config", "Browser").orElse("chrome");
         switch (browser.toLowerCase()) {
             case "edge": {
                 EdgeOptions options = new EdgeOptions();
@@ -50,7 +49,9 @@ public class DriverFactory {
     }
 
     public static void quitDriver() {
-        getDriver().quit();
-        driverThreadLocal.remove();
+        if (getDriver() != null) {
+            getDriver().quit();
+            driverThreadLocal.remove();
+        }
     }
 }
