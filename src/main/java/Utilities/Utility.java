@@ -5,8 +5,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.ui.ExpectedConditions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.openqa.selenium.JavascriptExecutor;
 
 import java.time.Duration;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Predicate;
 
 public class Utility {
 
@@ -28,6 +32,15 @@ public class Utility {
 
     public static WebElement waitForPresence(WebDriver driver, By locator) {
         return wait(driver).until(ExpectedConditions.presenceOfElementLocated(locator));
+    }
+
+    public static void waitForPageToLoad(WebDriver driver) {
+        WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(waitTime));
+        wait.until(webDriver ->
+                ((JavascriptExecutor) webDriver)
+                        .executeScript("return document.readyState")
+                        .equals("complete")
+        );
     }
 
     // action methods
@@ -64,13 +77,49 @@ public class Utility {
         }
     }
 
+    public static boolean isProductDisplayed(WebDriver driver, By listLocator, String name, By nameLocator) {
+        try {
+            List<WebElement> items = getElements(driver, listLocator);
+            for (WebElement item : items) {
+                String productTitle = item.findElement(nameLocator).getText().trim();
+                if (productTitle.equalsIgnoreCase(name)) {
+                    return true;
+                }
+            }
+            return false;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+
     // webElement method
     public static WebElement getElement(WebDriver driver, By locator) {
         return waitForPresence(driver, locator);
     }
 
+    public static List<WebElement> getElements(WebDriver driver, By locator) {
+        try {
+            return wait(driver).until(ExpectedConditions.visibilityOfAllElementsLocatedBy(locator));
+        } catch (Exception e) {
+            return new ArrayList<>();
+        }
+    }
+
     public static String getAttribute(WebDriver driver, By locator, String attribute) {
         WebElement element = waitForPresence(driver, locator);
         return element.getAttribute(attribute);
+    }
+
+    public static WebElement findElementInList(List<WebElement> elements, Predicate<WebElement> condition) {
+        for (WebElement e : elements) {
+            if (condition.test(e)) return e;
+        }
+        return null;
+    }
+
+
+    public static void click(WebDriver driver, WebElement element) {
+        element.click();
     }
 }

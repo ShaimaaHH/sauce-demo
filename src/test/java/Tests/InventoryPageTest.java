@@ -1,81 +1,181 @@
 package Tests;
 
-import org.openqa.selenium.By;
+import DriverFactory.DriverFactory;
+import Models.User;
+import Pages.InventoryPage;
+import Pages.LoginPage;
+import Utilities.DataUtils;
+import Utilities.LogUtils;
+import Utilities.Utility;
+
+import io.qameta.allure.Epic;
+import io.qameta.allure.Feature;
+import io.qameta.allure.Step;
+
 import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.chrome.ChromeDriver;
-import org.openqa.selenium.chrome.ChromeOptions;
-import org.openqa.selenium.support.ui.Select;
-import org.openqa.selenium.support.ui.WebDriverWait;
+
 import org.testng.Assert;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
-import java.time.Duration;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 
-@Test
+@Epic("inventory management")
+
 public class InventoryPageTest {
 
-    WebDriver driver;
-    WebDriverWait wait;
+    private WebDriver driver;
+    private InventoryPage inventoryPage;
+    private LoginPage loginPage;
+    private String baseUrl;
+    private String inventoryUrl;
 
-
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
+    @Step("Setup WebDriver and navigate to Inventory Page")
     public void setup() {
-        ChromeOptions options = new ChromeOptions();
-        options.addArguments("--incognito");
-        driver = new ChromeDriver(options);
-        driver.manage().window().maximize();
-        wait = new WebDriverWait(driver, Duration.ofSeconds(10));
-        driver.get("https://www.saucedemo.com");
-        driver.findElement(By.id("user-name")).sendKeys("standard_user");
-        driver.findElement(By.id("password")).sendKeys("secret_sauce");
-        driver.findElement(By.id("login-button")).click();
-        String url = driver.getCurrentUrl();
-        Assert.assertEquals(url, "https://www.saucedemo.com/inventory.html", "Models.User was not redirected to Inventory page after valid login");
+        LogUtils.info("Initializing WebDriver and navigating to Inventory Page");
+        DriverFactory.driverSetup();
+        driver = DriverFactory.getDriver();
+        baseUrl = DataUtils.getPropertyValue("config", "Base_URL")
+                .orElseThrow(() -> new RuntimeException("Base URL not found in config.properties"));
+        inventoryUrl = DataUtils.getPropertyValue("config", "Inventory_URL")
+                .orElseThrow(() -> new RuntimeException("Inventory_URL not found"));
+        driver.get(baseUrl);
+        loginPage = new LoginPage(driver);
+        User user = DataUtils.getUserByType("standard");
+        LogUtils.info("logging in as standard user", user.getUsername());
+        loginPage.login(
+                user.getUsername(),
+                user.getPassword()
+        );
+        Assert.assertTrue(Utility.verifyUrl(driver, inventoryUrl), "User was not redirected to Inventory page after login");
+        inventoryPage = new InventoryPage(driver);
+        LogUtils.info("Navigated to Inventory Page");
+    }
+
+    @AfterMethod(alwaysRun = true)
+    @Step("quit WebDriver")
+    public void tearDown() {
+        LogUtils.info("Quitting WebDriver");
+        DriverFactory.quitDriver();
     }
 
 
-    public void logoVisibility() {
-        WebElement logo = driver.findElement(By.className("app_logo"));
-        Assert.assertTrue(logo.isDisplayed(), "logo is not visible");
+    @DataProvider(name = "sortOptions")
+    public Object[][] sortOptionsProvider() {
+        return new Object[][]{
+                {InventoryPage.SORT_NAME_ASC},
+                {InventoryPage.SORT_NAME_DESC},
+                {InventoryPage.SORT_PRICE_ASC},
+                {InventoryPage.SORT_PRICE_DESC}
+        };
     }
 
-    public void menuButtonVisibility() {
-        WebElement menuButton = driver.findElement(By.id("react-burger-menu-btn"));
-        Assert.assertTrue(menuButton.isDisplayed(), "menu button is not visible");
+    @Step("Validating sorted order")
+    private <T extends Comparable<T>> void validateSorted(List<T> actual, boolean ascending) {
+        List<T> expected = new ArrayList<>(actual);
+        if (ascending) Collections.sort(expected);
+        else Collections.sort(expected, Collections.reverseOrder());
+        Assert.assertEquals(actual, expected);
+    }
+
+    @Step("Validating product order for sort option: {sortOption}")
+    private void validateProductOrder(String sortOption) {
+        if (sortOption.contains("Name")) {
+            validateSorted(inventoryPage.getProductNames(), sortOption.equals("Name (A to Z)"));
+        } else {
+            validateSorted(inventoryPage.getProductPrices(), sortOption.equals("Price (low to high)"));
+        }
+    }
+
+    @Feature("Product Sorting")
+    @Test(dataProvider = "sortOptions")
+    public void sortProductsTest(String sortOption) {
+        LogUtils.info("Testing sorting by: {}", sortOption);
+        inventoryPage.sortProducts(sortOption);
+        Assert.assertEquals(inventoryPage.getSelectedSortOption(), sortOption, "Dropdown selection mismatch!");
+        validateProductOrder(sortOption);
+        Utility.waitForPageToLoad(driver);
+    }
+
+    @Feature("add to cart")
+    @Test
+    public void addProductToCartTest() {
+        String product = "Sauce Labs Backpack";
+        LogUtils.info("Initial cart count: " + inventoryPage.getCartCount());
+        inventoryPage.addProductToCart(product);
+        int cartCount = inventoryPage.getCartCount();
+        LogUtils.info("Cart count after adding product: " + cartCount);
+        Assert.assertEquals(cartCount, 1, "Cart count should be 1 after adding product");
+    }
+
+    @Feature("remove from cart")
+    @Test
+    public void removeProductFromCartTest() {
+        String product = "Sauce Labs Backpack";
+        inventoryPage.addProductToCart(product);
+        Assert.assertEquals(inventoryPage.getCartCount(), 1, "Cart count should be 1 after adding product");
+        inventoryPage.removeProductFromCart(product);
+        int cartCount = inventoryPage.getCartCount();
+        LogUtils.info("Cart count after removing product: " + cartCount);
+        Assert.assertEquals(inventoryPage.getCartCount(), 0, "Cart count should be 0 after removing product");
     }
 
 
-    public void sortItemsByNameAToZ() {
-        Select sortDropdown = new Select(driver.findElement(By.className("product_sort_container")));
-        sortDropdown.selectByValue("az");
+    @Feature("navigate to product detail")
+    @Test
+    public void openProductDetailTest() {
+        String product = "Sauce Labs Backpack";
+        LogUtils.info("Navigating to product detail page for: ", product);
+        inventoryPage.openProductDetailPage(product);
+        String currentUrl = driver.getCurrentUrl();
+        LogUtils.info("Current URL after navigation: ", currentUrl);
+        Assert.assertTrue(currentUrl.contains("inventory-item.html"), "URL does not contain expected product detail path");
     }
 
-    public void sortItemsByNameZToA() {
+    @Test
+    public void verifyProductDetailsOnInventoryPage() {
+        String product = "Sauce Labs Backpack";
+        Assert.assertTrue(inventoryPage.isProductDisplayed(product));
+        Assert.assertEquals(inventoryPage.getPriceForProduct(product), 29.99);
     }
 
-    public void sortItemsByPriceLowToHigh() {
+    @Test
+    public void productDetailContentTest() {
+        String productName = "Sauce Labs Backpack";
+        inventoryPage.openProductDetailPage(productName);
+        Assert.assertTrue(inventoryPage.isProductNameDisplayed(), "Product name is not visible on detail page");
+        Assert.assertTrue(inventoryPage.isProductPriceDisplayed(), "Product price is not visible on detail page");
     }
 
-    public void sortItemsByPriceHighToLow() {
+    @Test
+    public void resetAppStateTest() {
+        inventoryPage.addProductToCart("Sauce Labs Backpack");
+        Assert.assertEquals(inventoryPage.getCartCount(), 1);
+        inventoryPage.openMenu();
+        inventoryPage.resetAppState();
+        Assert.assertEquals(inventoryPage.getCartCount(), 0);
     }
 
-    public void sortingOptionsVisibility() {
-
+    @Test
+    public void logoutTest() {
+        inventoryPage.logout();
+        Assert.assertTrue(Utility.verifyUrl(driver, baseUrl));
     }
 
-//    public void openAboutPage() {
-//        driver.findElement(By.id("react-burger-menu-btn")).click();
-//        wait.until(ExpectedConditions.elementToBeClickable(By.id("about_sidebar_link"))).click();
-//        String currentUrl = driver.getCurrentUrl();
-//        Assert.assertEquals(currentUrl, "https://saucelabs.com/");
-//
-//    }
-
-
-//    @AfterMethod
-//    public void tearDown() {
-//        driver.quit();
-//    }
+    @Feature("footer links")
+    @Test
+    public void footerLinksTest() {
+        Assert.assertTrue(inventoryPage.isTwitterLinkVisible(), "Twitter link is not visible");
+        Assert.assertTrue(inventoryPage.isFacebookLinkVisible(), "Facebook link is not visible");
+        Assert.assertTrue(inventoryPage.isLinkedInLinkVisible(), "LinkedIn link is not visible");
+        Assert.assertEquals(inventoryPage.getTwitterLinkURL(), "https://twitter.com/saucelabs");
+        Assert.assertEquals(inventoryPage.getFacebookLinkURL(), "https://www.facebook.com/saucelabs");
+        Assert.assertEquals(inventoryPage.getLinkedInLinkURL(), "https://www.linkedin.com/company/sauce-labs/");
+    }
 }
+
