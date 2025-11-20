@@ -1,0 +1,1 @@
+{"uuid":"55a75450-ba99-4dda-ba29-8e9681e0bd3e","name":"Tests.InventoryPageTest.setup","children":["0a760785-e314-49ee-8b71-de2c7d1b30cc"],"description":"","befores":[{"name":"setup","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1763675252451,"stop":1763675255643}],"afters":[],"start":1763675252451,"stop":1763675255643}

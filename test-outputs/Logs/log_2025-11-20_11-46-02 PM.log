@@ -1,0 +1,57 @@
+[INFO] 20-11-2025 23:46:02 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:46:08 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:46:09 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:46:19 [main] [Utilities.LogUtils] - Initial cart count: 0
+[INFO] 20-11-2025 23:46:20 [main] [Utilities.LogUtils] - Cart count after adding product: 1
+[INFO] 20-11-2025 23:46:20 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:46:20 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:46:21 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:46:23 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:46:23 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:46:24 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:46:28 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:46:29 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:46:30 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:46:30 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:46:32 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:46:34 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:46:34 [main] [Utilities.LogUtils] - Navigating to product detail page for:  Sauce Labs Backpack
+[INFO] 20-11-2025 23:46:35 [main] [Utilities.LogUtils] - Current URL after navigation:  https://www.saucedemo.com/inventory-item.html?id=4
+[INFO] 20-11-2025 23:46:35 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:46:35 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:46:39 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:46:42 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:46:43 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:46:49 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:46:52 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:46:55 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:47:06 [main] [Utilities.LogUtils] - Cart count after removing product: 0
+[INFO] 20-11-2025 23:47:16 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:47:16 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:47:19 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:47:19 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:47:32 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:47:32 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:47:34 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:47:35 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:47:35 [main] [Utilities.LogUtils] - Testing sorting by: {} Name (A to Z)
+[INFO] 20-11-2025 23:47:36 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:47:36 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:47:41 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:47:43 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:47:43 [main] [Utilities.LogUtils] - Testing sorting by: {} Name (Z to A)
+[INFO] 20-11-2025 23:47:45 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:47:45 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:47:49 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:47:50 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:47:50 [main] [Utilities.LogUtils] - Testing sorting by: {} Price (low to high)
+[INFO] 20-11-2025 23:47:51 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:47:51 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:47:53 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:47:54 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:47:54 [main] [Utilities.LogUtils] - Testing sorting by: {} Price (high to low)
+[INFO] 20-11-2025 23:47:55 [main] [Utilities.LogUtils] - Quitting WebDriver
+[INFO] 20-11-2025 23:47:56 [main] [Utilities.LogUtils] - Initializing WebDriver and navigating to Inventory Page
+[INFO] 20-11-2025 23:47:59 [main] [Utilities.LogUtils] - logging in as standard user standard_user
+[INFO] 20-11-2025 23:48:00 [main] [Utilities.LogUtils] - Navigated to Inventory Page
+[INFO] 20-11-2025 23:48:00 [main] [Utilities.LogUtils] - Quitting WebDriver
