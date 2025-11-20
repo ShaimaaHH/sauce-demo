@@ -1,1 +1,0 @@
-{"uuid":"4c100fc5-2b2b-4032-9b06-be2fa46f1b17","name":"Tests.LoginTest.setup","children":["15b8a051-0d93-4363-a7f1-16a30f652c77"],"description":"","befores":[{"name":"setup","status":"passed","stage":"finished","description":"","steps":[],"attachments":[],"parameters":[],"start":1763554082068,"stop":1763554083656}],"afters":[],"start":1763554082068,"stop":1763554083656}
